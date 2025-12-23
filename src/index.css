@@ -28,6 +28,13 @@ body {
   overflow: hidden;
 }
 
+.campaign-banner {
+  width: 100%;
+  height: auto;
+  border-radius: 12px 12px 0 0;
+  display: block;
+  z-index: 6;
+}
 
 /* IMD Name */
 .imd-name {

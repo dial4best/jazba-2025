@@ -7,6 +7,7 @@ import Destination from "./Destination";
 import thailandImg from "../assets/thailand.png";
 import taiwanImg from "../assets/taiwan.png";
 import munichImg from "../assets/munich.png";
+import bannerImg from "../assets/banner.png";
 import { useRef } from "react";
 import * as htmlToImage from "html-to-image";
 
@@ -40,6 +41,12 @@ export default function ProgressMap({ imdName, current }) {
   return (
     <div>
       <div className="map-container" ref={mapRef}>
+        <img
+          src={bannerImg}
+          alt="Campaign Banner"
+          className="campaign-banner"
+        />
+
         <div className="imd-name">{imdName}</div>
 
         <SvgPath activeLevel={level} />
