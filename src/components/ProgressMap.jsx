@@ -11,13 +11,16 @@ import bannerImg from "../assets/banner.png";
 import { useRef } from "react";
 import * as htmlToImage from "html-to-image";
 
-export default function ProgressMap({ imdName, current }) {
+export default function ProgressMap({ imd, current }) {
   const level = getCurrentLevel(current);
 
   const pointerPosition =
     MILESTONES.find((m) => m.step === level) || MILESTONES[0]; // fallback to step 1
 
   const mapRef = useRef(null);
+
+  const minTgt = imd?.minTgt ?? null;
+  const isEligible = minTgt !== null && current >= minTgt;
 
   const downloadImage = async () => {
     if (!mapRef.current) return;
@@ -38,6 +41,39 @@ export default function ProgressMap({ imdName, current }) {
     }
   };
 
+  if (!imd) {
+    return (
+      <div className="map-container">
+        <div style={{ marginTop: "120px", textAlign: "center" }}>
+          Select an IMD to begin
+        </div>
+      </div>
+    );
+  }
+
+  if (!isEligible) {
+    return (
+      <div className="map-container">
+        <div className="imd-name">{imd.name}</div>
+
+        <div
+          style={{
+            marginTop: "140px",
+            padding: "20px",
+            textAlign: "center",
+            background: "rgba(255,255,255,0.8)",
+            borderRadius: "12px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+          }}
+        >
+          <h3>🔒 Not Eligible Yet</h3>
+          <p>Minimum Target: ₹{minTgt.toLocaleString()}</p>
+          <p>Current Premium: ₹{current.toLocaleString()}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="map-container" ref={mapRef}>
@@ -47,7 +83,7 @@ export default function ProgressMap({ imdName, current }) {
           className="campaign-banner"
         />
 
-        <div className="imd-name">{imdName}</div>
+        <div className="imd-name">{imd.name}</div>
 
         <SvgPath activeLevel={level} />
 

@@ -1,17 +1,25 @@
+import { IMDS } from "../data/imds";
+
 export default function InputForm({
-  imdName,
-  setImdName,
+  selectedIMD,
+  setSelectedIMD,
   current,
   setCurrent,
 }) {
   return (
     <div style={{ marginBottom: "12px" }}>
-      <input
-        placeholder="IMD Name"
-        value={imdName}
-        onChange={(e) => setImdName(e.target.value)}
+      <select
+        value={selectedIMD || ""}
+        onChange={(e) => setSelectedIMD(e.target.value)}
         style={inputStyle}
-      />
+      >
+        <option value="">Select IMD</option>
+        {IMDS.map((imd) => (
+          <option key={imd.code} value={imd.code}>
+            {imd.name}
+          </option>
+        ))}
+      </select>
 
       <input
         type="number"

@@ -1,27 +1,25 @@
-import ProgressMap from "./components/ProgressMap";
-import InputForm from "./components/InputForm";
 import { useState } from "react";
+import InputForm from "./components/InputForm";
+import ProgressMap from "./components/ProgressMap";
+import { IMDS } from "./data/imds";
 
 export default function App() {
-  const [imdName, setImdName] = useState("IMD Name");
-  const [target, setTarget] = useState(1000000);
+  const [selectedIMD, setSelectedIMD] = useState("");
   const [current, setCurrent] = useState(0);
 
+  const imd = IMDS.find((i) => i.code === selectedIMD);
+
   return (
-    // <>
-    // Hello World
-    // </>
     <div className="app">
-      {/* <h1>Hello World</h1> */}
       <InputForm
-        imdName={imdName}
-        setImdName={setImdName}
+        selectedIMD={selectedIMD}
+        setSelectedIMD={setSelectedIMD}
         current={current}
         setCurrent={setCurrent}
       />
 
       <ProgressMap
-        imdName={imdName}
+        imd={imd}
         current={current}
       />
     </div>
