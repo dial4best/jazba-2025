@@ -1,7 +1,13 @@
+import { LEVELS } from "../utils/levels";
+
 export default function IMDInfoPanel({ imd, current }) {
   if (!imd) return null;
 
   const isEligible = current >= imd.minTgt;
+
+  const currentLevelObj = [...LEVELS]
+    .reverse()
+    .find(l => current >= l.target) || { level: 0, target: 0 };
 
   return (
     <div className="imd-info-panel">
@@ -22,6 +28,15 @@ export default function IMDInfoPanel({ imd, current }) {
           <span>Commitment</span>
           <strong>{imd.commitment}</strong>
         </div>
+
+        <div>
+          <span>Current Level</span>
+          <strong>
+            Level {currentLevelObj.level} (
+            {currentLevelObj.reward})
+          </strong>
+        </div>
+
       </div>
 
       <div

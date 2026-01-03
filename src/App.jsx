@@ -56,7 +56,11 @@ export default function App() {
 
       <div ref={exportRef} className="export-area">
         <IMDInfoPanel imd={imd} current={current} />
-        <ProgressMap imd={imd} current={current} />
+        <ProgressMap
+          imd={imd}
+          current={current}
+          isEligible={imd ? current >= imd.minTgt : false}
+        />
       </div>
     </div>
   );

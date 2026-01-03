@@ -107,7 +107,7 @@ svg {
 
 .imd-info-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -140,4 +140,36 @@ svg {
 .imd-info-status.not-eligible {
   background: rgba(239, 68, 68, 0.15);
   color: #b91c1c;
+}
+
+/* Locked (Not Eligible) Map Mode */
+.map-container.locked {
+  filter: saturate(0.7);
+}
+
+/* Fade milestones slightly */
+.map-container.locked .milestone-wrapper {
+  opacity: 0.35;
+}
+
+/* Fade destination images */
+.map-container.locked .destination {
+  opacity: 0.35;
+}
+
+/* Dim active path when locked */
+.map-container.locked path {
+  stroke-opacity: 0.35;
+}
+
+.commitment-pointer {
+  position: absolute;
+  width: 36px;
+  z-index: 4;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.9));
+}
+
+.map-container.locked .commitment-pointer {
+  opacity: 0.7;
 }

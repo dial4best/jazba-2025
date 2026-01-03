@@ -1,4 +1,6 @@
 import { getCurrentLevel } from "../utils/levels";
+import CommitmentPointer from "./CommitmentPointer";
+import { LEVELS } from "../utils/levels";
 import { MILESTONES } from "../utils/milestones";
 import Milestone from "./Milestone";
 import Pointer from "./Pointer";
@@ -9,14 +11,22 @@ import taiwanImg from "../assets/taiwan.png";
 import munichImg from "../assets/munich.png";
 import bannerImg from "../assets/banner.png";
 
-export default function ProgressMap({ imd, current }) {
+export default function ProgressMap({ imd, current, isEligible }) {
   const level = getCurrentLevel(current);
+
+  const commitmentLevelObj = LEVELS.find(
+    (l) => l.reward && imd?.commitment && imd.commitment.includes(l.reward)
+  );
 
   const pointerPosition =
     MILESTONES.find((m) => m.step === level) || MILESTONES[0]; // fallback to step 1
 
-  const minTgt = imd?.minTgt ?? null;
-  const isEligible = minTgt !== null && current >= minTgt;
+  const commitmentMilestone = commitmentLevelObj
+    ? MILESTONES.find((m) => m.step === commitmentLevelObj.level)
+    : null;
+
+  const isCommitmentReached =
+    commitmentLevelObj && level >= commitmentLevelObj.level;
 
   if (!imd) {
     return (
@@ -28,39 +38,14 @@ export default function ProgressMap({ imd, current }) {
     );
   }
 
-  if (!isEligible) {
-    return (
-      <div className="map-container">
-        <div className="imd-name">{imd.name}</div>
-
-        <div
-          style={{
-            marginTop: "140px",
-            padding: "20px",
-            textAlign: "center",
-            background: "rgba(255,255,255,0.8)",
-            borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          }}
-        >
-          <h3>🔒 Not Eligible Yet</h3>
-          <p>Minimum Target: ₹{minTgt.toLocaleString()}</p>
-          <p>Current Premium: ₹{current.toLocaleString()}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div>
-      <div className="map-container">
+      <div className={`map-container ${!isEligible ? "locked" : ""}`}>
         <img
           src={bannerImg}
           alt="Campaign Banner"
           className="campaign-banner"
         />
-
-        <div className="imd-name">{imd.name}</div>
 
         <SvgPath activeLevel={level} />
 
@@ -103,6 +88,15 @@ export default function ProgressMap({ imd, current }) {
             style={{
               top: pointerPosition.top,
               left: pointerPosition.left,
+            }}
+          />
+        )}
+
+        {commitmentMilestone && !isCommitmentReached && (
+          <CommitmentPointer
+            style={{
+              top: commitmentMilestone.top - 30,
+              left: commitmentMilestone.left + 30,
             }}
           />
         )}
