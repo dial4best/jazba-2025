@@ -88,3 +88,56 @@ svg {
   overflow: visible;
 }
 
+.imd-info-panel {
+  margin: 12px;
+  /* margin-top: 12px; */
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.imd-info-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+.imd-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.imd-info-grid span {
+  display: block;
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.imd-info-grid strong {
+  font-size: 13px;
+  color: #111827;
+}
+
+.imd-info-status {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.imd-info-status.eligible {
+  background: rgba(34, 197, 94, 0.15);
+  color: #15803d;
+}
+
+.imd-info-status.not-eligible {
+  background: rgba(239, 68, 68, 0.15);
+  color: #b91c1c;
+}
